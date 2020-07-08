@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-// import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -13,6 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
 import { ChromePicker } from 'react-color';
+import DraggableColorBox from './DraggableColorBox';
 
 const drawerWidth = 400;
 
@@ -57,7 +58,9 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
+    height: 'calc(100vh - 64px)',
     padding: theme.spacing(3),
+    // padding: 0,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
@@ -75,7 +78,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function NewPaletteForm() {
   const classes = useStyles();
-  //   const theme = useTheme();
+  const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [currentColor, setCurrentColor] = useState('teal');
   const [colors, setColors] = useState(['purple', '#e15764']);
@@ -159,11 +162,9 @@ export default function NewPaletteForm() {
         })}
       >
         <div className={classes.drawerHeader} />
-        <ul>
-          {colors.map(color => (
-            <li style={{ backgroundColor: color }}>{color}</li>
-          ))}
-        </ul>
+        {colors.map(color => (
+          <DraggableColorBox color={color} />
+        ))}
       </main>
     </div>
   );
